@@ -53,7 +53,7 @@ public class CheckoutSystemTest {
         double checkout = CheckoutSystem.checkout(itemsForCheckout, pricingStrategy);
         /*
             next assert checks that the problem isn't related to not picking up deals. The mentioned
-            test is done in the previous test.
+            check is done in the previous test.
          */
         assertNotEquals(150, (int) checkout);
         assertEquals(130,(int) checkout);

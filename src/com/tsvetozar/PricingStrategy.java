@@ -13,7 +13,7 @@ public class PricingStrategy {
     }
 
     /*
-        Add product and initiate deals map for it
+        Add product and initialize deals map for it
      */
     public void addProduct(Character item, double price){
         if(isPositiveOrZero(price)){
@@ -26,7 +26,7 @@ public class PricingStrategy {
     }
 
     /*
-        Setting a products price. Behaves like addProduct if said product
+        Setting a product's price. Behaves like addProduct if said product
         does not exist.
      */
     public void setProductPrice(Character item, double price){

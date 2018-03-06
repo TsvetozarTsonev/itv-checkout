@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -44,7 +45,7 @@ public class CheckoutSystemTest {
         pricingStrategy.addSpecialDeal(item, 3, 130);
 
         // build example checkout list
-        ArrayList<Character> itemsForCheckout = new ArrayList<>();
+        List<Character> itemsForCheckout = new ArrayList<>();
         itemsForCheckout.add(item);
         itemsForCheckout.add(item);
         itemsForCheckout.add(item);
@@ -71,7 +72,7 @@ public class CheckoutSystemTest {
         pricingStrategy.addSpecialDeal(item, 2, 90);
 
         // build example checkout list
-        ArrayList<Character> itemsForCheckout = new ArrayList<>();
+        List<Character> itemsForCheckout = new ArrayList<>();
         itemsForCheckout.add(item);
         itemsForCheckout.add(item);
         itemsForCheckout.add(item);

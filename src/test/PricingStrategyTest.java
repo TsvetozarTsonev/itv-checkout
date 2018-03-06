@@ -3,6 +3,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class PricingStrategyTest {
 
     PricingStrategy pricingStrategy;
@@ -13,10 +15,10 @@ public class PricingStrategyTest {
     }
 
     @Test
-    public void testAddProductAutomaticallyInitiatesDealsMap(){
+    public void testAddProductAutomaticallyInitilizesDealsMap(){
         Character item = 'A';
         pricingStrategy.addProduct(item, 50);
-        Assert.assertNotNull(pricingStrategy.getProductToSpecialDeals().get(item));
+        assertNotNull(pricingStrategy.getProductToSpecialDeals().get(item));
     }
 
     @Test
@@ -29,8 +31,8 @@ public class PricingStrategyTest {
         pricingStrategy.addSpecialDeal(item, 2, 45);
         pricingStrategy.addSpecialDeal(item, 4, 70);
 
-        Assert.assertEquals(4,pricingStrategy.getBestDeal(item, 5));
-        Assert.assertEquals(2,pricingStrategy.getBestDeal(item, 3));
+        assertEquals(4,pricingStrategy.getBestDeal(item, 5));
+        assertEquals(2,pricingStrategy.getBestDeal(item, 3));
     }
 
     @Test
@@ -40,7 +42,7 @@ public class PricingStrategyTest {
         // add products and their prices
         pricingStrategy.addProduct(item, 50);
 
-        Assert.assertEquals(1,pricingStrategy.getBestDeal(item, 5));
+        assertEquals(1,pricingStrategy.getBestDeal(item, 5));
     }
 
     @Test
@@ -50,7 +52,16 @@ public class PricingStrategyTest {
         // add products and their prices
         pricingStrategy.addProduct(item, 50);
 
-        Assert.assertTrue(pricingStrategy.getProductToPrice().containsKey(item));
+        assertTrue(pricingStrategy.getProductToPrice().containsKey(item));
+    }
+
+    @Test
+    public void testAddProductRejectsNegativePrices(){
+        Character item = 'B';
+
+        // add products and their prices
+        pricingStrategy.addProduct(item, -1);
+        assertFalse(pricingStrategy.getProductToPrice().containsKey(item));
     }
 
     @Test
@@ -60,7 +71,7 @@ public class PricingStrategyTest {
         // add products and their prices
         pricingStrategy.addProduct(item, 50);
         pricingStrategy.removeProduct(item);
-        Assert.assertFalse(pricingStrategy.getProductToPrice().containsKey(item));
+        assertFalse(pricingStrategy.getProductToPrice().containsKey(item));
     }
 
     @Test
@@ -70,7 +81,7 @@ public class PricingStrategyTest {
         // add products and their prices
         pricingStrategy.addProduct(item, 50);
         pricingStrategy.removeProduct(item);
-        Assert.assertFalse(pricingStrategy.getProductToSpecialDeals().containsKey(item));
+        assertFalse(pricingStrategy.getProductToSpecialDeals().containsKey(item));
     }
 
     @Test
@@ -78,7 +89,7 @@ public class PricingStrategyTest {
         Character item = 'B';
 
         boolean isProductDealAdded = pricingStrategy.addSpecialDeal(item, 2, 45);
-        Assert.assertEquals(false, isProductDealAdded);
+        assertEquals(false, isProductDealAdded);
     }
 
     @Test
@@ -88,8 +99,29 @@ public class PricingStrategyTest {
         pricingStrategy.addProduct(item, 50);
         pricingStrategy.addSpecialDeal(item, 2, 45);
 
-        Assert.assertFalse(pricingStrategy.getProductToSpecialDeals().get(item).isEmpty());
+        assertFalse(pricingStrategy.getProductToSpecialDeals().get(item).isEmpty());
     }
+
+    @Test
+    public void testAddSpecialDealRejectsNegativePrices(){
+        Character item = 'B';
+        // add products and their prices
+        pricingStrategy.addProduct(item, 50);
+        pricingStrategy.addSpecialDeal(item, 2, -1);
+
+        assertFalse(pricingStrategy.getProductToSpecialDeals().get(item).containsKey(2));
+    }
+
+    @Test
+    public void testAddSpecialDealRejectsDealsForQuantitiesLessThan2(){
+        Character item = 'B';
+        // add products and their prices
+        pricingStrategy.addProduct(item, 50);
+        pricingStrategy.addSpecialDeal(item, 1, 90);
+
+        assertFalse(pricingStrategy.getProductToSpecialDeals().get(item).containsKey(1));
+    }
+
 
     @Test
     public void testRemoveSpecialDealRemovesFromItemDeaslMap(){
@@ -99,7 +131,7 @@ public class PricingStrategyTest {
         pricingStrategy.addSpecialDeal(item, 2, 45);
         pricingStrategy.removeSpecialDeal(item,2);
 
-        Assert.assertTrue(pricingStrategy.getProductToSpecialDeals().get(item).isEmpty());
+        assertTrue(pricingStrategy.getProductToSpecialDeals().get(item).isEmpty());
     }
 
     @Test
@@ -109,13 +141,20 @@ public class PricingStrategyTest {
         pricingStrategy.addProduct(item, 50);
         pricingStrategy.setProductPrice(item, 40);
 
-        Assert.assertEquals(40, pricingStrategy.getProductPrice(item).intValue());
+        assertEquals(40, pricingStrategy.getProductPrice(item).intValue());
     }
 
     @Test
     public void testSetProductPriceActsLikeAddProductIfProductDoesNotExist(){
         Character item = 'B';
         pricingStrategy.setProductPrice(item, 40);
-        Assert.assertNotNull(pricingStrategy.getProductToSpecialDeals().get(item));
+        assertNotNull(pricingStrategy.getProductToSpecialDeals().get(item));
+    }
+
+    @Test
+    public void testSetProductPriceRejectsNegativePrices(){
+        Character item = 'B';
+        pricingStrategy.setProductPrice(item, -1);
+        assertFalse(pricingStrategy.getProductToPrice().containsKey(item));
     }
 }

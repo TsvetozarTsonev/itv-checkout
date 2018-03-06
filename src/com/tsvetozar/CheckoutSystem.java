@@ -1,7 +1,7 @@
 package com.tsvetozar;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CheckoutSystem {
@@ -9,7 +9,7 @@ public class CheckoutSystem {
     /*
         Calculate total sum to be paid for a list of items, applying a pricing strategy.
      */
-    public static double checkout(ArrayList<Character> items, PricingStrategy pricingStrategy) throws RuntimeException {
+    public static double checkout(List<Character> items, PricingStrategy pricingStrategy) throws RuntimeException {
         if (items.isEmpty()) {
             throw new RuntimeException("Checkout list is empty!");
         }
@@ -36,13 +36,13 @@ public class CheckoutSystem {
     /*
         Calculates total amount to be paid for a type of item.
      */
-    private static double checkoutItem(Character item, int boughtCount, PricingStrategy pricingStrategy) {
+    private static double checkoutItem(Character item, int quantity, PricingStrategy pricingStrategy) {
         boolean productHasSpecialDeals = pricingStrategy.productHasSpecialDeals(item);
         if (!productHasSpecialDeals) {
-            return pricingStrategy.getProductPrice(item) * boughtCount;
+            return pricingStrategy.getProductPrice(item) * quantity;
         } else {
             double totalPriceForItem = 0;
-            int numberOfItemsLeft = boughtCount;
+            int numberOfItemsLeft = quantity;
             while (numberOfItemsLeft > 1) {
                 int bestDeal = pricingStrategy.getBestDeal(item, numberOfItemsLeft);
                 if (bestDeal != 1) {

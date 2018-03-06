@@ -1,6 +1,6 @@
 # itv-checkout
 
-Solution for ITVs checkout task
+Solution for ITV's checkout task
 
 ### Some assumptions I have made for my solution:
 1. Bigger deals always bring better value to the client ( buying 3 of some item is always better than buying 2 of them).
